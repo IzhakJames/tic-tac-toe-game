@@ -5,27 +5,57 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
+    <script
+      src="https://kit.fontawesome.com/3bfd3ce9e5.js"
+      crossorigin="anonymous"></script>
     <title>Vanilla JS TTT</title>
   </head>
   <body>
     <main>
       <div class="grid" data-id="grid">
-        <div class="turn" data-id="turn"></div>
-        <div class="menu"></div>
+        <!-- Turn Indicator -->
+        <div class="turn" data-id="turn">
+          <i class="fa-solid fa-x turquoise"></i>
+          <p>Player 1, you're up!</p>
+        </div>
 
-        <div class="square" id="1"></div>
-        <div class="square" id="2"></div>
-        <div class="square" id="3"></div>
-        <div class="square" id="4"></div>
-        <div class="square" id="5"></div>
-        <div class="square" id="6"></div>
-        <div class="square" id="7"></div>
-        <div class="square" id="8"></div>
-        <div class="square" id="9"></div>
+        <!-- Dropdown Game Menu -->
+        <div class="menu">
+          <button class="menu-btn" data-id="menu-button">
+            Actions
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
 
-        <div class="score shadow"></div>
-        <div class="score shadow"></div>
-        <div class="score shadow"></div>
+          <div class="items border hidden" data-id="menu-popover">
+            <button data-id="reset-btn">Reset</button>
+            <button data-id="new-round-btn">New Round</button>
+          </div>
+        </div>
+
+        <!-- The game board -->
+        <div class="square shadow" id="1"></div>
+        <div class="square shadow" id="2"></div>
+        <div class="square shadow" id="3"></div>
+        <div class="square shadow" id="4"></div>
+        <div class="square shadow" id="5"></div>
+        <div class="square shadow" id="6"></div>
+        <div class="square shadow" id="7"></div>
+        <div class="square shadow" id="8"></div>
+        <div class="square shadow" id="9"></div>
+
+        <!-- The Score Board -->
+        <div class="score shadow" style="background-color: var(--turquoise)">
+          <p>Player 1</p>
+          <span data-id="player-1-stats">0 Wins</span>
+        </div>
+        <div class="score shadow" style="background-color: var(--light-gray)">
+          <p>Ties</p>
+          <span data-id="ties">0</span>
+        </div>
+        <div class="score shadow" style="background-color: var(--yellow)">
+          <p>Player 2</p>
+          <span data-id="player-2-stats">0 Wins</span>
+        </div>
       </div>
     </main>
 
@@ -41,5 +71,13 @@
         <a href="https://github.com/IzhakJames">Mohammed Izhak</a>
       </p>
     </footer>
+
+    <!-- Hidden until someone wins the game -->
+    <div class="modal hidden">
+      <div class="modal-contents">
+        <p>Player 1 Wins!!</p>
+        <button>Play again</button>
+      </div>
+    </div>
   </body>
 </html>
