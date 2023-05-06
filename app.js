@@ -104,8 +104,6 @@ const App = {
               turn.replaceChild(newTurnIcon, turn.children[0]);
             }
             square.appendChild(icon);
-            console.log(player1_moves);
-            console.log(player2_moves);
           }
         }
 
@@ -114,7 +112,6 @@ const App = {
           if (App.state.gameInProgress) {
             winning_state.forEach((state) => {
               if (state.every((id) => player1_moves.includes(String(id)))) {
-                console.log("Player 1 has won!");
                 App.state.gameInProgress = false;
                 const modal = App.$.modal;
                 modal.classList.toggle("hidden");
@@ -122,7 +119,6 @@ const App = {
               }
 
               if (state.every((id) => player2_moves.includes(String(id)))) {
-                console.log("Player 2 has won!");
                 App.state.gameInProgress = false;
                 const modal = App.$.modal;
                 modal.querySelector("p").innerHTML = "Player 2 Wins!!";
