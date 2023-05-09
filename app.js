@@ -128,6 +128,14 @@ const App = {
             });
           }
         }
+
+        if (player1_moves.length + player2_moves.length == 9) {
+          App.state.gameInProgress = false;
+          const modal = App.$.modal;
+          modal.querySelector("p").innerHTML = "It's a Draw!!";
+          modal.classList.toggle("hidden");
+          return;
+        }
       });
     });
   },
