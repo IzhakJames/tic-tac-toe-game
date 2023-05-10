@@ -8,12 +8,18 @@ const App = {
     squares: document.querySelectorAll(".square"),
     turn: document.querySelector('[data-id="turn"]'),
     modal: document.querySelector(".modal"),
+    player1_stats: document.querySelector('[data-id="player-1-stats"]'),
+    player2_stats: document.querySelector('[data-id="player-2-stats"]'),
+    ties: document.querySelector('[data-id="ties"]'),
   },
 
   state: {
     currentPlayer: 1,
     player1_moves: [],
     player2_moves: [],
+    player1_wins: 0,
+    player2_wins: 0,
+    ties: 0,
     gameInProgress: true,
     winning_state: [
       [1, 2, 3],
@@ -55,10 +61,6 @@ const App = {
       App.$.menuItem.classList.toggle("hidden");
     });
 
-    App.$.newRoundBtn.addEventListener("click", (event) => {
-      alert("Start a new round");
-    });
-
     App.$.playAgainBtn.addEventListener("click", (event) => {
       App.$.modal.querySelector("p").innerHTML = "Player 1 Wins!!";
       App.$.modal.classList.toggle("hidden");
@@ -67,6 +69,15 @@ const App = {
 
     App.$.resetBtn.addEventListener("click", (event) => {
       App.reloading();
+    });
+
+    App.$.newRoundBtn.addEventListener("click", (event) => {
+      App.reloading();
+      App.$.player1_wins = 0;
+      App.$.player2_wins = 0;
+      App.$.player1_stats.innerHTML = "0 Wins";
+      App.$.player2_stats.innerHTML = "0 Wins";
+      App.$.ties.innerHTML = "0 Wins";
     });
 
     App.$.squares.forEach((square) => {
@@ -107,6 +118,16 @@ const App = {
           }
         }
 
+        if (player1_moves.length + player2_moves.length === 9) {
+          App.state.gameInProgress = false;
+          const modal = App.$.modal;
+          modal.querySelector("p").innerHTML = "It's a Draw!!";
+          App.state.ties++;
+          modal.classList.toggle("hidden");
+          App.$.ties.innerHTML = String(App.state.ties);
+          return;
+        }
+
         const winning_state = App.state.winning_state;
         if ((player1_moves.length >= 3) | (player2_moves.length >= 3)) {
           if (App.state.gameInProgress) {
@@ -114,7 +135,10 @@ const App = {
               if (state.every((id) => player1_moves.includes(String(id)))) {
                 App.state.gameInProgress = false;
                 const modal = App.$.modal;
+                App.state.player1_wins++;
                 modal.classList.toggle("hidden");
+                App.$.player1_stats.innerHTML =
+                  String(App.state.player1_wins) + " Wins";
                 return;
               }
 
@@ -122,19 +146,14 @@ const App = {
                 App.state.gameInProgress = false;
                 const modal = App.$.modal;
                 modal.querySelector("p").innerHTML = "Player 2 Wins!!";
+                App.state.player2_wins++;
                 modal.classList.toggle("hidden");
+                App.$.player2_stats.innerHTML =
+                  String(App.state.player2_wins) + " Wins";
                 return;
               }
             });
           }
-        }
-
-        if (player1_moves.length + player2_moves.length == 9) {
-          App.state.gameInProgress = false;
-          const modal = App.$.modal;
-          modal.querySelector("p").innerHTML = "It's a Draw!!";
-          modal.classList.toggle("hidden");
-          return;
         }
       });
     });
